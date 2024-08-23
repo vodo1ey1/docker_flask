@@ -1,21 +1,21 @@
 SHELL := /bin/bash
 
-IMAGE_NAME := dockertest_gertsev_rate
-IMAGE_TAG := v1.0
+IMAGE_NAME := docker_gertsev_rate
+IMAGE_TAG := v1.2
 
-CONTAINER_NAME := dockertest_gertsev_rate
+CONTAINER_NAME := docker_gertsev_rate
 CONTAINER_PORT := 5000
 
 VOLUME_NAME := rates
 
 build:
-	@make rmi &> /dev/null || true
 	@docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
 
 run:
 	@docker volume create $(VOLUME_NAME)
-	@docker run --rm \
+	@docker run \
 	--name $(CONTAINER_NAME) \
+	--network host \
 	-p $(CONTAINER_PORT):5000 \
 	-v $(VOLUME_NAME):/rates \
 	$(IMAGE_NAME):$(IMAGE_TAG)
@@ -28,6 +28,9 @@ volume-inspect:
 
 volume-prune:
 	@docker volume prune
+
+rm:
+	@docker rm $(CONTAINER_NAME)
 
 rmi:
 	@docker rmi $(IMAGE_NAME):$(IMAGE_TAG)

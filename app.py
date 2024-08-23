@@ -16,9 +16,9 @@ def get_rate():
     currency = request.args.get('currency')
     if currency == "":
         currency = os.environ.get('CURR_DEFAULT','no')
-        
+
     rate = get_currency_rate(currency)
     return render_template("rate.html", title = currency, rate = rate, today_day = date.today().strftime("%d.%m.%Y"))
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=5000)

@@ -8,7 +8,7 @@ WORKDIR /app
 
 RUN pip install -r requirements.txt
 
-VOLUME /rates
+#VOLUME /rates
 
 ENV CURR_DEFAULT='USD'
 
