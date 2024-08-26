@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>{{ currency }}</title>
     <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet" />
 </head>
 <body>
-   <h2>Курс {{ title }} на сегодня {{ today_day }}:</h2>
+   <h2>Курс {{ currency }} на сегодня {{ today_day }}:</h2>
    <h1>{{ rate }} руб.</h1>
    <form action="/rate">
         <select name="currency" id="currency">
@@ -17,6 +17,15 @@
             <option value="CNY">Китайский юань</option>
         </select>
         <button type="submit">Проверить</button>
+        </br>   
+        {% for log in logs %}
+        <div>
+            <p>{{ log[1] }}</p>
+            <p>{{ log[2] }}</p>
+            <p>{{ log[3] }}</p>
+            <p>{{ log[4] }}</p>
+        </div>
+        {% endfor %}
    </form>
 </body>
 </html>
