@@ -11,21 +11,38 @@
    <h1>{{ rate }} руб.</h1>
    <form action="/rate">
         <select name="currency" id="currency">
-            <option value="">--Валюта по умолчанию USD (из ENV Docker-file) --</option>
+            <option value="">--Валюта по умолчанию Доллар США (из ENV Dockerfile) --</option>
             <option value="GBP">Фунт стерлингов</option>
             <option value="EUR">Евро</option>
             <option value="CNY">Китайский юань</option>
         </select>
         <button type="submit">Проверить</button>
-        </br>   
-        {% for log in logs %}
+        </br> 
+        </br>  
+        <h3>Логи:</h3>
+        </br>
         <div>
-            <p>{{ log[1] }}</p>
-            <p>{{ log[2] }}</p>
-            <p>{{ log[3] }}</p>
-            <p>{{ log[4] }}</p>
+            <table> 
+                <thead> 
+                  <tr> 
+                    <th>Валюта</th> 
+                    <th>Курс</th> 
+                    <th>Дата и время обновления</th> 
+                    <th>IP-адрес</th> 
+                  </tr> 
+                </thead> 
+                <tbody> 
+                    {% for row in logs %} 
+                    <tr> 
+                    <td>{{ row[0] }}</td> 
+                    <td>{{ row[1] }}</td> 
+                    <td>{{ row[2] }}</td> 
+                    <td>{{ row[3] }}</td>
+                    </tr> 
+                    {% endfor %} 
+                </tbody> 
+            </table> 
         </div>
-        {% endfor %}
    </form>
 </body>
 </html>

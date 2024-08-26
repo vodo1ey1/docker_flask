@@ -34,7 +34,7 @@ def get_rate_logs(currency):
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute(f'''
-    SELECT * FROM {TABLE_NAME} WHERE currency = '{currency}';
+    SELECT currency, rate, date_log, ip_log FROM {TABLE_NAME} WHERE currency = '{currency}' order by date_log desc;
     ''')
     logs = cur.fetchall()
     cur.close()

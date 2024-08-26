@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:16.4-alpine
+    container_name: dockergertsev_compose_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    networks: &default-networks
+      - this_net
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "psql -U user -d db -c 'SELECT 1'"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+
+  app:
+    image: docker_gertsev_rate:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: docker_gertsev_rate
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_NAME: db
+    networks: *default-networks
+    ports:
+      - 5000:5000
+    depends_on:
+      db:
+        condition: service_healthy
+
+networks:
+  this_net:
+    name: docker_gertsev_net
+
+volumes:
+  db_volume:
+    name: docker_gertsev_db_volume
